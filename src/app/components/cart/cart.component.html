@@ -1,0 +1,64 @@
+<mat-nav-list>
+    <!--Logo-->
+    <div class="logo">
+        <img src="../../assets/GCloud.png" alt="GCloud Logo">
+        <p>GCLOUD</p>
+    </div>
+    <button class="addButton">
+        <mat-icon class="add">add</mat-icon> <span>Add</span>
+    </button>
+
+    <!-- <mat-divider></mat-divider> -->
+
+    <div style="margin-top: 7rem;">
+        <!--home section-->
+        <!-- <a mat-list-item routerLink="/home" routerLinkActive="list-item-active">
+            <mat-icon>home</mat-icon><span>Home</span>
+        </a> -->
+
+        <a mat-list-item routerLink="/recent" routerLinkActive="list-item-active">
+            <mat-icon>access_time</mat-icon><span>Recent</span>
+        </a>
+
+        <!--my drive section-->
+
+        <ng-container>
+            <a mat-list-item routerLink="/drive" routerLinkActive="list-item-active">
+              <mat-icon>dashboard</mat-icon><span>My Drive</span>
+            </a>
+        </ng-container>
+          
+        <ng-template #activeDriveLink>
+        <a mat-list-item class="list-item-active" style="cursor: default;" (click)="$event.preventDefault()">
+            <mat-icon>dashboard</mat-icon><span>My Drive</span>
+        </a>
+        </ng-template>
+        <!--shared file-->
+        <a mat-list-item routerLink="/shared" routerLinkActive="list-item-active">
+            <mat-icon>folder_shared</mat-icon><span>Shared</span>
+        </a>
+        <!--starred-->
+        <a mat-list-item routerLink="/starred" routerLinkActive="list-item-active">
+            <mat-icon>star</mat-icon><span>Starred</span>
+        </a>
+        <!--trash-->
+        <a mat-list-item routerLink="/trash" routerLinkActive="list-item-active">
+            <mat-icon>delete_outline</mat-icon><span>Trash</span>
+        </a>
+        <!--tags-->
+        <!-- <a mat-list-item routerLink="/tags" routerLinkActive="list-item-active">
+            <mat-icon>tags</mat-icon><span>Tags</span>
+        </a> -->
+    </div>
+
+
+    <div class="text-center commandCont">
+        <div class="justify-content-center">
+            <button class="btn btn-danger logout bg-white" style="outline: none;" >
+                <mat-icon>exit_to_app</mat-icon>
+            </button>
+        </div>
+    </div>
+
+
+</mat-nav-list>
