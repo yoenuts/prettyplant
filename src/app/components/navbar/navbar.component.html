@@ -1,7 +1,7 @@
 
 @if (isLandingPage() || isLoginPage()) {
     <div class="flex flex-col items-center w-full">
-        <div class="bg-white h-15 overscroll-none flex justify-between items-center py-2 px-28 border-b-2 border-[#E8E8E8] w-full max-w-6xl">
+        <div *ngIf="!isLoginPage()" class="bg-white h-15 overscroll-none flex justify-between items-center py-2 px-28 border-b-2 border-[#E8E8E8] w-full max-w-6xl">
             <div>
                 <button (click)="navigateToLanding()" class="font-Fraunces font-[600] text-[1.2rem]">Home</button>
             </div>
@@ -9,7 +9,7 @@
                 <button class="font-Fraunces italic font-[1000] text-[1.5rem] text-main" (click)="navigateToLanding()">PrettyPlant</button>
             </div>
             <div>
-                <button class="font-Fraunces font-[600] text-[1.2rem]" *ngIf="!isLoginPage()" (click)="navigateToLogin()">Login</button>
+                <button class="font-Fraunces font-[600] text-[1.2rem]" routerLink="/login">Login</button>
             </div>
         </div>
     </div>

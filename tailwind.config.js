@@ -6,7 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        main: "#3f6449"
+        main: "#3f6449",
+        login: "#093623",
+        loginAccent: "#1e5724",
+        mainLight: "#f8f4e4",
 
       },
       fontFamily: {

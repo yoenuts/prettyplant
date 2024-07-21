@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
+import { TokenInterceptor } from './services/authentication/token.interceptor';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 //material modules here
@@ -37,6 +42,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
@@ -44,7 +51,12 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     MatListModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:TokenInterceptor,
+      multi:true
+    },
   ],
   bootstrap: [AppComponent]
 })

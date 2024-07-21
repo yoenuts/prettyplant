@@ -9,3 +9,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'prettyplant';
 }
+
+export const mainPort = "http://localhost";

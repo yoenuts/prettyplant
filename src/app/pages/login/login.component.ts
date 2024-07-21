@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-declare var google:any;
 import { Subscription } from 'rxjs';
 import { LoginService } from '../../services/authentication/login.service';
 import { AuthService } from '../../services/authentication/auth.service';
@@ -9,6 +8,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
+
+declare var google:any;
 
 @Component({
   selector: 'app-login',
@@ -37,9 +38,13 @@ export class LoginComponent {
     });
   }
 
+  setSignInActive(isActive: boolean): void {
+    this.isSignInActive = isActive;
+  }
+
   ngOnInit(): void {
     google.accounts.id.initialize({
-      client_id: '29716397471-rli2g9ckpmqqg94h4vniv7jrd7akos34.apps.googleusercontent.com',
+      client_id: '29716397471-un6fte4sip9vegqjvtk0j990pjifneht.apps.googleusercontent.com',
       callback: (response: any) => {
         //decode the credential
         let decodedToken = this.tokenService.decode(response.credential);
@@ -82,12 +87,14 @@ export class LoginComponent {
   }
 
 
+
   toggleVisibility(event: MouseEvent): void {
     event.stopPropagation();
     this.hide = !this.hide;
   }
 
   setTokenInCookie(token: string) {
+    this.tokenService.setToken(token);
     console.log("setting token in cookie ", token);
     let expireDate = new Date();
     expireDate.setTime(expireDate.getTime() + (60 * 60 * 1000));
@@ -96,7 +103,11 @@ export class LoginComponent {
 
   navigateBasedOnRole() {
     console.log("navigate to user page");
-    this.routers.navigate(['/browse']);
+    this.routers.navigate(['/shop']);
+  }
+
+  navigateToLandPage() {
+    this.routers.navigate(['/']);
   }
 
   onLogin() {
@@ -113,15 +124,13 @@ export class LoginComponent {
     if(endpoint == 'registerUser'){
       this._snackBar.open("Account has been successfully registered.", 'Undo', {duration: 1500});
     }
-    console.log(this.form.value);
+    
     this.dataService.login(this.form, endpoint).subscribe({
       next: (next:any) => {
-        console.log(next);
         if(next.code === 200){
-
           this.setTokenInCookie(next.token);
           this.loginService.LoggedIn();
-          this.routers.navigate(['/browse']);
+          this.routers.navigate(['/shop']);
         } else {
           if(next.message === "User already exists") {
 
