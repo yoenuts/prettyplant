@@ -1,23 +1,6 @@
 
-@if (isLandingPage() || isLoginPage()) {
-    <div class="flex flex-col items-center w-full">
-        <div *ngIf="!isLoginPage()" class="bg-white h-15 overscroll-none flex justify-between items-center py-2 px-28 border-b-2 border-[#E8E8E8] w-full max-w-6xl">
-            <div>
-                <button (click)="navigateToLanding()" class="font-Fraunces font-[600] text-[1.2rem]">Home</button>
-            </div>
-            <div class="flex items-center justify-center h-[60px]">
-                <button class="font-Fraunces italic font-[1000] text-[1.5rem] text-main" (click)="navigateToLanding()">PrettyPlant</button>
-            </div>
-            <div>
-                <button class="font-Fraunces font-[600] text-[1.2rem]" routerLink="/login">Login</button>
-            </div>
-        </div>
-    </div>
+@if (!isLandingPage() || !isLoginPage()) {
 
-}
-
-@else {
-    
     <div class="flex flex-col items-center w-full">
         <div class="bg-white h-15 overscroll-none flex justify-between items-center py-2 px-28 border-b-2 border-gray-200 w-full max-w-6xl">
             <div>
@@ -46,6 +29,52 @@
                 <button [ngClass]="{'text-main': isSmall(), 'text-black': !isSmall()}" class="font-Fraunces font-[400] text-[1.2rem]" (click)="openSmall()">Small</button>
                 <button [ngClass]="{'text-main': isMedium(), 'text-black': !isMedium()}"  class="font-Fraunces font-[400] text-[1.2rem]" (click)="openMedium()">Medium</button>
                 <button [ngClass]="{'text-main': isLarge(), 'text-black': !isLarge()}"  class="font-Fraunces font-[400] text-[1.2rem]" (click)="openLarge()">Large</button>
+            </div>
+        </div>
+    </div>
+
+}
+
+@else if (isShopDetails()) {
+
+    <div class="flex flex-col items-center w-full">
+        <div class="bg-white h-15 overscroll-none flex justify-between items-center py-2 px-28 border-b-2 border-gray-200 w-full max-w-6xl">
+            <div>
+                <button class="font-Fraunces font-[600] text-[1.2rem]" (click)="navigateToShop()">Shop Plants</button>
+            </div>
+            <div class="flex items-center justify-center h-[60px]">
+                <button class="font-Fraunces italic font-[1000] text-[1.5rem] text-main" (click)="navigateToShop()">PrettyPlant</button>
+            </div>
+            <div>
+                <button class="font-Fraunces font-[600] text-[1.2rem]" (click)="openCart()"></button>
+                <mat-icon>shopping_cart</mat-icon>
+
+                <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="font-Fraunces pl-2">
+                    <mat-icon>account_circle</mat-icon>
+                </button>
+
+                <mat-menu #profileMenu="matMenu">
+                    <button mat-menu-item (click)="openProfile()">Profile</button>
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+
+}
+
+@else {
+    
+    <div class="flex flex-col items-center w-full">
+        <div *ngIf="!isLoginPage()" class="bg-white h-15 overscroll-none flex justify-between items-center py-2 px-28 border-b-2 border-[#E8E8E8] w-full max-w-6xl">
+            <div>
+                <button (click)="navigateToLanding()" class="font-Fraunces font-[600] text-[1.2rem]">Home</button>
+            </div>
+            <div class="flex items-center justify-center h-[60px]">
+                <button class="font-Fraunces italic font-[1000] text-[1.5rem] text-main" (click)="navigateToLanding()">PrettyPlant</button>
+            </div>
+            <div>
+                <button class="font-Fraunces font-[600] text-[1.2rem]" routerLink="/login">Login</button>
             </div>
         </div>
     </div>

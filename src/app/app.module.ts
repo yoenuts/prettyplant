@@ -19,6 +19,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
+import { CarouselModule } from '@coreui/angular';
 
 import { LandingComponent } from './pages/landing/landing.component';
 import { ShopComponent } from './pages/shop/shop.component';
@@ -53,6 +54,7 @@ import { ProductViewComponent } from './pages/product-view/product-view.componen
     MatDialogModule,
     MatListModule,
     MatMenuModule,
+    CarouselModule,
   ],
   providers: [
     provideAnimationsAsync(),

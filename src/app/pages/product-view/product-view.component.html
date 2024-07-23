@@ -1,6 +1,33 @@
-<div class="w-full h-full">
-    <p>
-        hello
-        wtf
-    </p>
+<div class="w-[70%] mx-auto mt-5 font-Fraunces"> 
+
+    <div class="flex">
+        <div class="md:min-w-[40%] md:h-full">
+            <c-carousel [animate]="false" transition="crossfade">
+                <c-carousel-indicators></c-carousel-indicators>
+                <c-carousel-inner>
+                    <c-carousel-item *ngFor="let slide of variations">
+                    <img
+                        [src]="slide"
+                        class="d-block w-100" />
+                    </c-carousel-item>
+                </c-carousel-inner>
+                <c-carousel-control *ngIf="variations.length > 1" [routerLink] direction="prev"></c-carousel-control>
+                <c-carousel-control *ngIf="variations.length > 1" [routerLink] direction="next"></c-carousel-control>
+                </c-carousel>
+            
+        </div>
+        <div class="md:min-w-[60%] md:h-full">
+            <h2>   
+                {{ this.plantDetails.plant_name }}
+            </h2>
+            <p>{{ this.plantDetails.plant_description }}</p>
+
+            <div>
+                <button class="bg-loginAccent text-mainLight">Add to Cart</button>
+            </div>
+            
+        </div>
+
+    </div>
+
 </div>

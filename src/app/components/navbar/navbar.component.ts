@@ -40,8 +40,13 @@ export class NavbarComponent {
     return this.router.url === '/login';
   }
 
+  isShopDetails() {
+    const pattern = /\/shop\/\d+/;
+    return pattern.test(this.router.url);
+  }
+
   openCart() {
-    this.dialog.open(CartComponent, {
+  this.dialog.open(CartComponent, {
       width: '40vw', // Set width to 100% of the viewport width
       maxWidth: '100vw', // Ensure it doesn't exceed the viewport width
       position: {

@@ -5,6 +5,7 @@ export interface Product {
     plant_price: number;
     plant_rating: number;
     plant_image: string;
+    varies: number;
 }
 
 export interface User {
@@ -25,7 +26,7 @@ export interface Cart {
 export interface Variation {
     variation_ID: number;
     plant_ID: number;
-    variation_name: string;
-    variation_price: number;
-    variation_stock: number;
+    pot_color: string;
+    plant_image: string;
+
 }

@@ -8,13 +8,10 @@ import { ProductViewComponent } from './pages/product-view/product-view.componen
 
 const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'shop', component: ShopComponent, children: [
-      {path: 'category/:category', component: ShopCategoryComponent},
-      {path: ':id', component: ProductViewComponent},
-      
-    ]
-  },
+  { path: 'login', component: LoginComponent},
+  { path: 'shop', component: ShopComponent},
+  {path: 'shop/:id', component: ProductViewComponent},
+  {path: 'category/:category', component: ShopCategoryComponent},
 ];
 
 @NgModule({

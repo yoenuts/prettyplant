@@ -25,6 +25,8 @@ export class PlantStoreService {
   productsLoaded$ = this._products.asObservable().pipe
   (filter(product => product.length > 0));
 
+  plantVariations$ = this._plantVariations.asObservable();
+
 
   constructor(private http: HttpClient, private loginService: LoginService, private tokenService: TokenService) { 
     this.loginService.loadValues$.subscribe(userID => {
@@ -33,12 +35,22 @@ export class PlantStoreService {
         this.userID = userID;
         forkJoin({
           getPlants: this.getAllPlants(),
-        }).subscribe(({ getPlants }) => {
+          getAllVariations: this.getAllVariations()
+        }).subscribe(({ getPlants, getAllVariations }) => {
           this._products.next(getPlants);
+          this._plantVariations.next(getAllVariations);
           this._showLoader.next(false);
         });
       }
     });
+  }
+
+  getAllVariations() {
+    const url = 'http://localhost/easyplant/api-prettyplant/main/getVariation';
+    return this.http.get<Variation[]>(url).pipe(
+      tap(response => console.log(response
+      ))
+    );
   }
 
   getAllPlants() {
@@ -55,6 +67,18 @@ export class PlantStoreService {
 
     return this.plants$;
 
+  }
+
+  getPlantVariations(id: number): string[] {
+    const variations = this._plantVariations.getValue().filter(variation => variation.plant_ID === id);
+    return variations.map(variation => variation.plant_image);
+  }
+
+  getPlantFromShop(id: number): Product {
+    const plantHere = this._products.getValue().find(plant => plant.plant_ID === id);
+    console.log("huh after search", this._products.getValue());
+    console.log("heres the plant", plantHere)
+    return plantHere!;
   }
 
   getallPlantsState() {
