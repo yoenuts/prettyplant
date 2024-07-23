@@ -4,19 +4,23 @@ import { LoginComponent } from './pages/login/login.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { ShopCategoryComponent } from './components/shop-category/shop-category.component';
+import { ProductViewComponent } from './pages/product-view/product-view.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'shop', component: ShopComponent, children: [
-      {path: 'category/:category', component: ShopCategoryComponent}
+      {path: 'category/:category', component: ShopCategoryComponent},
+      {path: ':id', component: ProductViewComponent},
+      
     ]
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 
 export class AppRoutingModule { }

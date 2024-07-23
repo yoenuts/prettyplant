@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../interfaces';
+import { Product, Variation } from '../interfaces';
 import { forkJoin, BehaviorSubject, tap,  filter } from 'rxjs';
 import { LoginService } from './authentication/login.service';
 import { TokenService } from './authentication/token.service';
 import { HttpClient } from '@angular/common/http';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,14 @@ export class PlantStoreService {
 
 
   private _products = new BehaviorSubject<Product[]>([]);
+  private _plants = new BehaviorSubject<Product[]>([]);
   private _showLoader = new BehaviorSubject<boolean>(false);
+  private _plantVariations = new BehaviorSubject<Variation[]>([]);
   userID!: number;
 
   products$ = this._products.asObservable();
   showLoader$ = this._showLoader.asObservable();
+  plants$ = this._plants.asObservable();
 
   productsLoaded$ = this._products.asObservable().pipe
   (filter(product => product.length > 0));
@@ -46,8 +49,19 @@ export class PlantStoreService {
     );
   }
 
+  getAllShopPlants(): Observable<Product[]> {  
+    let shopPlants = this._products.getValue();
+    this._plants.next(shopPlants);
+
+    return this.plants$;
+
+  }
 
   getallPlantsState() {
     return this._products.getValue();
+  }
+
+  getAllShopPlantsState() {
+    return this._plants.getValue();
   }
 }

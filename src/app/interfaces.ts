@@ -21,3 +21,11 @@ export interface Cart {
     plant_ID: number;
     quantity: number;
 }
+
+export interface Variation {
+    variation_ID: number;
+    plant_ID: number;
+    variation_name: string;
+    variation_price: number;
+    variation_stock: number;
+}

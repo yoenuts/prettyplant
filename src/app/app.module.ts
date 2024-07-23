@@ -18,12 +18,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { LandingComponent } from './pages/landing/landing.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ShopCategoryComponent } from './components/shop-category/shop-category.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { ProductViewComponent } from './pages/product-view/product-view.component';
 
 
 
@@ -38,6 +40,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     CartComponent,
     ShopCategoryComponent,
     CheckoutComponent,
+    ProductViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     MatIconModule,
     MatSidenavModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule,
   ],
   providers: [
     provideAnimationsAsync(),

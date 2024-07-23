@@ -1,3 +1,19 @@
-<div class="w-[100vw] h-[100vh]">
-    <p>shop works!</p>
+
+<div class="flex justify-center">
+    <div class="w-[80%] mx-auto"> 
+        <div class="flex flex-wrap -m-2 mt-4">
+            <div class="p-2 w-1/4 lg:h-[500px]" *ngFor="let product of plants" routerLink="/shop/{{product.plant_ID}}">
+                <div class="h-full border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                    <img class="lg:h-64 md:h-48 w-full object-cover object-center" src="{{ product.plant_image }}" alt="{{ product.plant_name }}"> <!-- Adjusted height -->
+                    <div class="p-3">
+                        <button><h6 class="title-font text-lg font-medium text-gray-900 font-Fraunces" routerLink="/shop/{{product.plant_ID}}">{{ product.plant_name }}</h6></button>
+                        <h6 class=" text-medium font-medium mb-3 font-Fraunces text-loginAccent">Php {{ product.plant_price }}.00</h6>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+

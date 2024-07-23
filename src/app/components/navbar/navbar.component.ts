@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CartComponent } from '../cart/cart.component';
+import { TokenService } from '../../services/authentication/token.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import { CartComponent } from '../cart/cart.component';
 export class NavbarComponent {
 
 
-  constructor(private router: Router, private dialog: MatDialog) { }
+  constructor(private router: Router, private dialog: MatDialog, private tokenService: TokenService) { }
 
   isActive(route: string): boolean {
     console.log("im active")
@@ -50,6 +51,15 @@ export class NavbarComponent {
     });
   }
 
+
+  openAll() { 
+    return this.router.navigate(['/shop']);
+  }
+
+  openProfile() {
+    return this.router.navigate(['/profile']);
+  }
+
   openSmall() {
     return this.router.navigate(['/shop/category/small']);
   }
@@ -62,6 +72,10 @@ export class NavbarComponent {
     return this.router.navigate(['/shop/category/large']);
   } 
 
+  isAll() {
+    return this.router.url === '/shop';
+  }
+
   isSmall() {
     return this.router.url === '/shop/category/small';
   }
@@ -72,6 +86,11 @@ export class NavbarComponent {
 
   isLarge() {
     return this.router.url === '/shop/category/large';
+  }
+
+  logout() {
+    this.tokenService.flushToken(); 
+    this.router.navigate(['/']);
   }
 
 }

@@ -27,12 +27,22 @@
                 <button class="font-Fraunces italic font-[1000] text-[1.5rem] text-main" (click)="navigateToShop()">PrettyPlant</button>
             </div>
             <div>
-                <button class="font-Fraunces font-[600] text-[1.2rem]" (click)="openCart()">Cart</button>
+                <button class="font-Fraunces font-[600] text-[1.2rem]" (click)="openCart()"></button>
                 <mat-icon>shopping_cart</mat-icon>
+
+                <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="font-Fraunces pl-2">
+                    <mat-icon>account_circle</mat-icon>
+                </button>
+
+                <mat-menu #profileMenu="matMenu">
+                    <button mat-menu-item (click)="openProfile()">Profile</button>
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                </mat-menu>
             </div>
         </div>
         <div class="bg-white h-15 overscroll-none flex justify-center items-center py-1 px-28 w-full max-w-6xl mt-4">
             <div class="space-x-5">
+                <button [ngClass]="{'text-main': isAll(), 'text-black': !isAll()}" class="font-Fraunces font-[400] text-[1.2rem]" (click)="openAll()">All</button>
                 <button [ngClass]="{'text-main': isSmall(), 'text-black': !isSmall()}" class="font-Fraunces font-[400] text-[1.2rem]" (click)="openSmall()">Small</button>
                 <button [ngClass]="{'text-main': isMedium(), 'text-black': !isMedium()}"  class="font-Fraunces font-[400] text-[1.2rem]" (click)="openMedium()">Medium</button>
                 <button [ngClass]="{'text-main': isLarge(), 'text-black': !isLarge()}"  class="font-Fraunces font-[400] text-[1.2rem]" (click)="openLarge()">Large</button>
