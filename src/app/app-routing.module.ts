@@ -5,6 +5,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { ShopCategoryComponent } from './components/shop-category/shop-category.component';
 import { ProductViewComponent } from './pages/product-view/product-view.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'shop', component: ShopComponent},
   {path: 'shop/:id', component: ProductViewComponent},
   {path: 'category/:category', component: ShopCategoryComponent},
+  {path: 'cart', component: CartComponent},
 ];
 
 @NgModule({

@@ -24,9 +24,9 @@ export interface Cart {
 }
 
 export interface Variation {
-    variation_ID: number;
+    variation_id: number;
     plant_ID: number;
     pot_color: string;
     plant_image: string;
 
-}
+}   

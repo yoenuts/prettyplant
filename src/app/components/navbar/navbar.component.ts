@@ -45,15 +45,16 @@ export class NavbarComponent {
     return pattern.test(this.router.url);
   }
 
+  isShop() {
+    return this.router.url.startsWith('/shop');
+  }
+
+  isCart() {
+    return this.router.url === '/cart';
+  }
+
   openCart() {
-  this.dialog.open(CartComponent, {
-      width: '40vw', // Set width to 100% of the viewport width
-      maxWidth: '100vw', // Ensure it doesn't exceed the viewport width
-      position: {
-        right: '0px' // Position it at 0px from the right
-      },
-      panelClass: 'full-width-dialog' // Use a custom class for further styling if needed
-    });
+    return this.router.navigate(['/cart']);
   }
 
 

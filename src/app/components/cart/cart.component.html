@@ -1,64 +1,55 @@
-<mat-nav-list>
-    <!--Logo-->
-    <div class="logo">
-        <img src="../../assets/GCloud.png" alt="GCloud Logo">
-        <p>GCLOUD</p>
-    </div>
-    <button class="addButton">
-        <mat-icon class="add">add</mat-icon> <span>Add</span>
-    </button>
+<div class="flex flex-col md:flex-row w-full h-full font-Fraunces">
 
-    <!-- <mat-divider></mat-divider> -->
-
-    <div style="margin-top: 7rem;">
-        <!--home section-->
-        <!-- <a mat-list-item routerLink="/home" routerLinkActive="list-item-active">
-            <mat-icon>home</mat-icon><span>Home</span>
-        </a> -->
-
-        <a mat-list-item routerLink="/recent" routerLinkActive="list-item-active">
-            <mat-icon>access_time</mat-icon><span>Recent</span>
-        </a>
-
-        <!--my drive section-->
-
-        <ng-container>
-            <a mat-list-item routerLink="/drive" routerLinkActive="list-item-active">
-              <mat-icon>dashboard</mat-icon><span>My Drive</span>
-            </a>
-        </ng-container>
-          
-        <ng-template #activeDriveLink>
-        <a mat-list-item class="list-item-active" style="cursor: default;" (click)="$event.preventDefault()">
-            <mat-icon>dashboard</mat-icon><span>My Drive</span>
-        </a>
-        </ng-template>
-        <!--shared file-->
-        <a mat-list-item routerLink="/shared" routerLinkActive="list-item-active">
-            <mat-icon>folder_shared</mat-icon><span>Shared</span>
-        </a>
-        <!--starred-->
-        <a mat-list-item routerLink="/starred" routerLinkActive="list-item-active">
-            <mat-icon>star</mat-icon><span>Starred</span>
-        </a>
-        <!--trash-->
-        <a mat-list-item routerLink="/trash" routerLinkActive="list-item-active">
-            <mat-icon>delete_outline</mat-icon><span>Trash</span>
-        </a>
-        <!--tags-->
-        <!-- <a mat-list-item routerLink="/tags" routerLinkActive="list-item-active">
-            <mat-icon>tags</mat-icon><span>Tags</span>
-        </a> -->
-    </div>
-
-
-    <div class="text-center commandCont">
-        <div class="justify-content-center">
-            <button class="btn btn-danger logout bg-white" style="outline: none;" >
-                <mat-icon>exit_to_app</mat-icon>
-            </button>
+    <div class="flex flex-col justify-center div2 md:min-w-[45%] h-3/5 md:h-full w-full">
+        <div class="flex flex-row items-center mt-2 ml-2 mb-2">
+            <svg width="50" height="40" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_529_8)">
+                <path d="M16.5 15C17.0304 15 17.5391 15.2107 17.9142 15.5858C18.2893 15.9609 18.5 16.4696 18.5 17C18.5 17.5304 18.2893 18.0391 17.9142 18.4142C17.5391 18.7893 17.0304 19 16.5 19C15.9696 19 15.4609 18.7893 15.0858 18.4142C14.7107 18.0391 14.5 17.5304 14.5 17C14.5 16.4696 14.7107 15.9609 15.0858 15.5858C15.4609 15.2107 15.9696 15 16.5 15ZM16.5 16C16.2348 16 15.9804 16.1054 15.7929 16.2929C15.6054 16.4804 15.5 16.7348 15.5 17C15.5 17.2652 15.6054 17.5196 15.7929 17.7071C15.9804 17.8946 16.2348 18 16.5 18C16.7652 18 17.0196 17.8946 17.2071 17.7071C17.3946 17.5196 17.5 17.2652 17.5 17C17.5 16.7348 17.3946 16.4804 17.2071 16.2929C17.0196 16.1054 16.7652 16 16.5 16ZM7.5 15C8.03043 15 8.53914 15.2107 8.91421 15.5858C9.28929 15.9609 9.5 16.4696 9.5 17C9.5 17.5304 9.28929 18.0391 8.91421 18.4142C8.53914 18.7893 8.03043 19 7.5 19C6.96957 19 6.46086 18.7893 6.08579 18.4142C5.71071 18.0391 5.5 17.5304 5.5 17C5.5 16.4696 5.71071 15.9609 6.08579 15.5858C6.46086 15.2107 6.96957 15 7.5 15ZM7.5 16C7.23478 16 6.98043 16.1054 6.79289 16.2929C6.60536 16.4804 6.5 16.7348 6.5 17C6.5 17.2652 6.60536 17.5196 6.79289 17.7071C6.98043 17.8946 7.23478 18 7.5 18C7.76522 18 8.01957 17.8946 8.20711 17.7071C8.39464 17.5196 8.5 17.2652 8.5 17C8.5 16.7348 8.39464 16.4804 8.20711 16.2929C8.01957 16.1054 7.76522 16 7.5 16ZM18.5 3H4.77L7.32 9H15.5C15.83 9 16.12 8.84 16.3 8.6L19.3 4.6C19.43 4.43 19.5 4.22 19.5 4C19.5 3.73478 19.3946 3.48043 19.2071 3.29289C19.0196 3.10536 18.7652 3 18.5 3ZM15.5 10H7.37L6.6 11.56L6.5 12C6.5 12.2652 6.60536 12.5196 6.79289 12.7071C6.98043 12.8946 7.23478 13 7.5 13H18.5V14H7.5C6.96957 14 6.46086 13.7893 6.08579 13.4142C5.71071 13.0391 5.5 12.5304 5.5 12C5.4997 11.6607 5.58573 11.3269 5.75 11.03L6.47 9.56L2.84 1H1.5V0H3.5L4.35 2H18.5C19.0304 2 19.5391 2.21071 19.9142 2.58579C20.2893 2.96086 20.5 3.46957 20.5 4C20.5 4.5 20.33 4.92 20.05 5.26L17.14 9.15C16.78 9.66 16.18 10 15.5 10Z" fill="#3F6449"/>
+                </g>
+            </svg>  
+                
+            <h1 class="text-3xl font-semibold text-main"> Your Cart</h1>
         </div>
+        <div class="flex flex-col h-full w-full items-center overflow-y-auto" style="max-height: 1000px;"> 
+            <div *ngFor="let plant of cartItems" class="flex justify-center w-[90%] mt-2 shadow-sm rounded-xl">
+                <div class="flex flex-row w-full">
+                    <img [src]="plant.variation_id != null ? getImageSrc(plant.plant_ID, plant.variation_id) : plant.plant_image" class="w-[200px]" alt="prettyplant logo">
+                    <div class="w-full ml-2">
+                        <h2 class="text-xl font-semibold">{{plant.plant_name}}</h2>
+                        <h5>Size: {{plant.plant_category}}</h5>
+                        <h5>Color: {{this.itemColor}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>  
+
+    <div class="flex flex-col div1 md:min-w-[55%] h-2/5 md:h-full justify-center items-center bg-pWhite">
+
+        <div class="flex flex-col justify-center items-center mt-5 mb-5 md:w-[900px] bg-white rounded-lg">
+            <div class="flex justify-between w-full px-4 mt-2">
+                <h2 class="text-2xl font-semibold">Subtotal</h2>
+                <h3>Php {{itemSubtotal}}</h3>
+            </div>
+            <div class="flex justify-between w-full px-4 mt-2 mb-2">
+                <h2 class="text-2xl font-semibold">Shipping</h2>
+                <h3>Php 70</h3>
+            </div>
+        </div>
+
+        <div class="flex flex-row justify-center items-center mt-5 mb-5 md:w-[900px] bg-white rounded-lg">
+            <h1>how lagay ka muna ng kung ano</h1>
+            <form (ngSubmit)="proceedToCheckout()">
+
+            </form>
+        </div>
+            
+        
     </div>
 
+</div>
 
-</mat-nav-list>
+<!-- <div class="w-full h-full">
+    <p>login works!</p>
+</div> -->

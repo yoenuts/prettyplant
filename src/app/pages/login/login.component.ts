@@ -102,7 +102,6 @@ export class LoginComponent {
   }
 
   navigateBasedOnRole() {
-    console.log("navigate to user page");
     this.routers.navigate(['/shop']);
   }
 
@@ -110,8 +109,8 @@ export class LoginComponent {
     this.routers.navigate(['/']);
   }
 
-  onLogin() {
-    console.log("yeet");
+   onLogin() {
+
     this.isLoading = true;
     let endpoint = 'registerUser';
     if(this.isSignInActive) {

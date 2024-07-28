@@ -34,9 +34,7 @@ export class LoginService {
   }
 
   public LoggedIn(): void {
-    console.log("loginservice ran");
     const token = this.tokenService.getToken();
-    console.log("this is token ",token);
     const userID = this.tokenService.userIDToken(this.tokenService.decodeToken());
     const userRole = this.tokenService.userRoleToken(this.tokenService.decodeToken());
     console.log(userID);

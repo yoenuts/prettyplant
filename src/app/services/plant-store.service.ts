@@ -15,7 +15,7 @@ export class PlantStoreService {
   private _products = new BehaviorSubject<Product[]>([]);
   private _plants = new BehaviorSubject<Product[]>([]);
   private _showLoader = new BehaviorSubject<boolean>(false);
-  private _plantVariations = new BehaviorSubject<Variation[]>([]);
+  _plantVariations = new BehaviorSubject<Variation[]>([]);
   userID!: number;
 
   products$ = this._products.asObservable();
@@ -24,9 +24,10 @@ export class PlantStoreService {
 
   productsLoaded$ = this._products.asObservable().pipe
   (filter(product => product.length > 0));
+  plantsVariationsLoaded$ = this._plantVariations.asObservable().pipe
+  (filter(product => product.length > 0));
 
   plantVariations$ = this._plantVariations.asObservable();
-
 
   constructor(private http: HttpClient, private loginService: LoginService, private tokenService: TokenService) { 
     this.loginService.loadValues$.subscribe(userID => {
@@ -53,6 +54,26 @@ export class PlantStoreService {
     );
   }
 
+  getVariationById(id: number): string {
+
+    //console.log("this is the id: ", id);
+    //console.log("this is the variation: ", this._plantVariations.getValue());
+    const variations = this._plantVariations.getValue().find(variation => variation.variation_id === id);
+    //console.log("this is the variation", variations);
+    if(!variations) {
+      console.log("ala")
+      return '';
+    }
+
+    //console.log("this is the variation", variations);
+    return variations!.pot_color;
+  }
+
+  getVariationImagePathById(id: number): string {
+    const variations = this._plantVariations.getValue().find(variation => variation.variation_id === id);
+    return variations!.plant_image;
+  }
+  
   getAllPlants() {
     console.log("i ran from plants store");
     const url = 'http://localhost/easyplant/api-prettyplant/main/getProduct';
@@ -74,11 +95,16 @@ export class PlantStoreService {
     return variations.map(variation => variation.plant_image);
   }
 
+
   getPlantFromShop(id: number): Product {
     const plantHere = this._products.getValue().find(plant => plant.plant_ID === id);
-    console.log("huh after search", this._products.getValue());
-    console.log("heres the plant", plantHere)
     return plantHere!;
+  }
+
+  findVariationID(productId: number, color: string): number | null {
+    console.log("these are the variations: ", this._plantVariations.getValue());
+    const variation = this._plantVariations.getValue().find(v => v.plant_ID === productId && v.pot_color === color);
+    return variation ? variation.variation_id : null;
   }
 
   getallPlantsState() {

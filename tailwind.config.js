@@ -10,7 +10,14 @@ module.exports = {
         login: "#093623",
         loginAccent: "#1e5724",
         mainLight: "#f8f4e4",
+        pWhite: "#E6DFD1",
+        pBlack: "#41342d",
+        pGray: "#B4B4A5",
+        pBlue: "#7E878A",
+        pPink: "#E7D5C8",
+        pRed: "#A25A40",
 
+      
       },
       fontFamily: {
         Fraunces: ["Fraunces"], 
