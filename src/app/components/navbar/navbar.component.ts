@@ -15,7 +15,6 @@ export class NavbarComponent {
   constructor(private router: Router, private dialog: MatDialog, private tokenService: TokenService) { }
 
   isActive(route: string): boolean {
-    console.log("im active")
     return this.router.url === route;
   }
 
@@ -49,6 +48,10 @@ export class NavbarComponent {
     return this.router.url.startsWith('/shop');
   }
 
+  isShopCategory() {
+    return this.router.url.startsWith('/shop/category');
+  }
+
   isCart() {
     return this.router.url === '/cart';
   }
@@ -75,6 +78,7 @@ export class NavbarComponent {
   }
 
   openLarge() {
+    console.log("open large")
     return this.router.navigate(['/shop/category/large']);
   } 
 
@@ -87,7 +91,7 @@ export class NavbarComponent {
   }
 
   isMedium() {
-    return this.router.url === '/shop/category/medium';
+    return this.router.url === 'shop/category/medium';
   }
 
   isLarge() {

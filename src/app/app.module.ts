@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import { CarouselModule } from '@coreui/angular';
+import { FormsModule } from '@angular/forms';
 
 import { LandingComponent } from './pages/landing/landing.component';
 import { ShopComponent } from './pages/shop/shop.component';
@@ -55,6 +56,7 @@ import { ProductViewComponent } from './pages/product-view/product-view.componen
     MatListModule,
     MatMenuModule,
     CarouselModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync(),

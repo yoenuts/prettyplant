@@ -55,17 +55,14 @@ export class PlantStoreService {
   }
 
   getVariationById(id: number): string {
-
-    //console.log("this is the id: ", id);
-    //console.log("this is the variation: ", this._plantVariations.getValue());
     const variations = this._plantVariations.getValue().find(variation => variation.variation_id === id);
-    //console.log("this is the variation", variations);
+
     if(!variations) {
       console.log("ala")
       return '';
     }
 
-    //console.log("this is the variation", variations);
+
     return variations!.pot_color;
   }
 
@@ -75,7 +72,7 @@ export class PlantStoreService {
   }
   
   getAllPlants() {
-    console.log("i ran from plants store");
+
     const url = 'http://localhost/easyplant/api-prettyplant/main/getProduct';
     return this.http.get<Product[]>(url).pipe(
         tap(response => console.log(response))
@@ -102,7 +99,6 @@ export class PlantStoreService {
   }
 
   findVariationID(productId: number, color: string): number | null {
-    console.log("these are the variations: ", this._plantVariations.getValue());
     const variation = this._plantVariations.getValue().find(v => v.plant_ID === productId && v.pot_color === color);
     return variation ? variation.variation_id : null;
   }

@@ -27,7 +27,11 @@ export class DataService {
     return this.http.patch(mainPort + '/easyplant/api-prettyplant/main/' + endpoint, data);
   }
 
-  deleteData(endpoint: string) {
+  deleteData(endpoint: string, id: number) {
+    return this.http.delete(`${mainPort}/easyplant/api-prettyplant/main/${endpoint}?id=${id}`);
+  }
+
+  delete(endpoint: string) {
     return this.http.delete(mainPort + '/easyplant/api-prettyplant/main/' + endpoint);
   }
 }

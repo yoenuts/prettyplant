@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { PlantStoreService } from '../../services/plant-store.service';
 import { Location } from '@angular/common';
 import { DataService } from '../../services/data.service';
-
-import { Product } from '../../interfaces';
-
+import { CartService } from '../../services/cart.service';
+import { Cart, Product } from '../../interfaces';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
@@ -20,7 +20,9 @@ export class ProductViewComponent {
   activeColor = 'White';
   quantity: number = 1;
 
-  constructor(private route: ActivatedRoute, private plantStore: PlantStoreService, private location: Location, private dataService: DataService) { }
+  isLoading = false;
+
+  constructor(private snackbar: MatSnackBar, private route: ActivatedRoute, private plantStore: PlantStoreService, private cartService: CartService, private location: Location, private dataService: DataService) { }
 
   goBack() {
     this.location.back();
@@ -40,8 +42,6 @@ export class ProductViewComponent {
   activeIndexChange(index: number, color: string): void {
     this.activeIndex = index;
     this.activeColor = color;
-
-    console.log("color", color);
   }
 
   increaseQuantity() {
@@ -54,16 +54,33 @@ export class ProductViewComponent {
     }
   }
 
-  addToCart(id: number) {
+  addToCart(id: number, quantity: number): void {
+    this.isLoading = true;
     this.plantStore.plantsVariationsLoaded$.subscribe(() => { 
       const variation_ID = this.plantStore.findVariationID(id, this.activeColor)
-      console.log("this is the variation id", variation_ID)
-      console.log("this is the product id", id) 
-      console.log("this is the quantity", this.quantity)
+      let previousQuantity = this.cartService.getQuantity(id, variation_ID);
+      let newQuantity = previousQuantity + quantity;
+      let cartID = this.cartService.findItemInCart(id, variation_ID);
+      if(cartID) {
+        this.cartService.increaseSomeMoreQuantity(id, quantity);
+        this.dataService.patchData({quantity: newQuantity, cart_ID: cartID}, 'addQuantity').subscribe((response: any) => {
+          console.log(response);
+          this.isLoading = false;
+          this.snackbar.open('Item added to cart!', 'Close', {
+            duration: 2000,
+          });
 
-      this.dataService.postData({plant: id, variation: variation_ID, count: this.quantity}, 'addCart').subscribe((response: any) => {
-        console.log(response);
-      })
+        })
+      } else {
+        this.dataService.postData({plant: id, variation: variation_ID, count: this.quantity}, 'addCart').subscribe((response: any) => {
+          console.log(response);
+          this.cartService.addToCart(response, id, variation_ID, this.quantity);
+          this.isLoading = false;
+          this.snackbar.open('Item added to cart!', 'Close', {
+            duration: 2000,
+          });
+        })
+      }
     });
   }
 
@@ -78,11 +95,10 @@ export class ProductViewComponent {
           this.plantStore.plantsVariationsLoaded$.subscribe(()  => {
               const plantVariations = this.plantStore.getPlantVariations(this.plant_id);
               this.variations.push(...plantVariations);
+              console.log("Variations: ", this.variations);
               this.processUrls(this.variations); 
             }
           )
-
-          console.log("variations", this.variations);
 
         }
 
