@@ -95,7 +95,6 @@ export class LoginComponent {
 
   setTokenInCookie(token: string) {
     this.tokenService.setToken(token);
-    console.log("setting token in cookie ", token);
     let expireDate = new Date();
     expireDate.setTime(expireDate.getTime() + (60 * 60 * 1000));
     document.cookie = `token=${token}; ${expireDate}; path=/`
@@ -146,8 +145,6 @@ export class LoginComponent {
     })
 
     this.googleLogin = false;
-
-    console.log("this was the endpoint", endpoint);
     this.isLoading = false;
   }
 

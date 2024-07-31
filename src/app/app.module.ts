@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
 import { TokenInterceptor } from './services/authentication/token.interceptor';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -56,7 +57,8 @@ import { ProductViewComponent } from './pages/product-view/product-view.componen
     MatListModule,
     MatMenuModule,
     CarouselModule,
-    FormsModule
+    FormsModule,
+    LazyLoadImageModule
   ],
   providers: [
     provideAnimationsAsync(),

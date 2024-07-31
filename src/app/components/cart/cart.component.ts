@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
   discountError: string = '';
   discountApplied: boolean = false;
   checkboxActive: boolean = false;
+  addressForm: boolean = false; 
 
   selectedPlants: Cart[] = [];
 
@@ -109,19 +110,6 @@ export class CartComponent implements OnInit {
     this.getCartSubTotal();
   }
 
-
-  proceedToCheckout() {
-    this.cartService.clearCart();
-    this.snackBar.open('Thank you for shopping with us!', 'Close', {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-    });
-    
-    this.dataService.deleteAll('deleteCart').subscribe(response => {
-      //(response);
-    });
-  }
 
   increaseQuantity(cart: number, id: number, variation: number | null) {
     if (this.selectedPlants.length > 0) {

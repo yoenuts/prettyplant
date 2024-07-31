@@ -3,7 +3,7 @@
         <div class="flex flex-wrap -m-2 mt-4">
             <div class="p-2 w-1/4 lg:h-[500px]" *ngFor="let product of plants" routerLink="/shop/{{product.plant_ID}}">
                 <div class="h-full border-gray-200 border-opacity-60 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <img class="lg:h-64 md:h-fuk w-full object-cover object-center" src="{{ product.plant_image }}" alt="{{ product.plant_name }}"> <!-- Adjusted height -->
+                    <img class="lg:h-64 md:h-fuk w-full object-cover object-center" lazyLoad="{{ product.plant_image }}" alt="{{ product.plant_name }}"> <!-- Adjusted height -->
                     <div class="p-3">
                         <button><h6 class="title-font text-lg font-medium text-gray-900 font-Fraunces" routerLink="/shop/{{product.plant_ID}}">{{ product.plant_name }}</h6></button>
                         <h6 class=" text-medium font-medium mb-3 font-Fraunces text-loginAccent">Php {{ product.plant_price }}.00</h6>

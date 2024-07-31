@@ -11,40 +11,88 @@
             <h1 class="text-3xl font-semibold text-main"> Your Cart</h1>
         </div>
         <div class="flex flex-col h-full w-full items-center overflow-y-auto" style="max-height: 850px;"> 
-            <div *ngFor="let plant of cartItems" class="flex flex-row justify-center w-[90%] mt-2">
-                <div class="flex items-start mr-2 mt-1">
-                    <input type="checkbox" [(ngModel)]="plant.selected" (change)="onCheckboxChanged(plant)" class="w-4 h-4 rounded-lg">
-                </div>
-                <div class="flex flex-row w-full shadow-lg rounded-xl">
-                    <div>
-                        <img [src]="plant.variation_id != null ? getImageSrc(plant.plant_ID, plant.variation_id) : plant.plant_image" class="w-[200px]" alt="prettyplant logo">
+            @if(!this.addressForm){
+                <div *ngFor="let plant of cartItems" class="flex flex-row justify-center w-[90%] mt-2">
+                    <div class="flex items-start mr-2 mt-1">
+                        <input type="checkbox" [(ngModel)]="plant.selected" (change)="onCheckboxChanged(plant)" class="w-4 h-4 rounded-lg">
                     </div>
-                    <div class="flex flex-col w-full ml-2 mr-1 relative">
-                        <div class="flex flex-row justify-between items-center">
-                            <h2 class="text-xl font-semibold">{{plant.plant_name}}</h2>
-                            <button class="mt-1 mr-1 justify-end text-red-500" title="Remove" (click)="removeItem(plant.cart_ID)">
-                                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <mask id="path-1-inside-1_542_3" fill="white">
-                                    <path d="M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8"/>
-                                    </mask>
-                                    <path d="M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8" fill="#1E5724"/>
-                                    <path d="M16.005 19.346L15.0201 19.1728L15.0201 19.173L16.005 19.346ZM14.035 21L14.0351 20H14.035V21ZM5.965 21L5.965 20L5.96492 20L5.965 21ZM3.995 19.346L4.97992 19.173L4.97989 19.1728L3.995 19.346ZM17.0151 7.82682L15.0201 19.1728L16.9899 19.5192L18.9849 8.17318L17.0151 7.82682ZM15.0201 19.173C14.9794 19.4047 14.8583 19.6146 14.6782 19.7659L15.9642 21.2976C16.5046 20.8438 16.8678 20.214 16.9899 19.519L15.0201 19.173ZM14.6782 19.7659C14.498 19.9171 14.2703 20 14.0351 20L14.0349 22C14.7406 22.0001 15.4237 21.7513 15.9642 21.2976L14.6782 19.7659ZM14.035 20H5.965V22H14.035V20ZM5.96492 20C5.72969 20 5.50199 19.9171 5.32183 19.7659L4.03581 21.2976C4.57627 21.7513 5.25939 22.0001 5.96508 22L5.96492 20ZM5.32183 19.7659C5.14168 19.6146 5.02062 19.4047 4.97992 19.173L3.01008 19.519C3.13216 20.214 3.49536 20.8438 4.03581 21.2976L5.32183 19.7659ZM4.97989 19.1728L2.98489 7.82682L1.01511 8.17318L3.01011 19.5192L4.97989 19.1728Z" fill="#093623" mask="url(#path-1-inside-1_542_3)"/>
-                                    <path d="M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8H18ZM19 5H13.375ZM1 5H6.625ZM6.625 5V3C6.625 2.46957 6.83571 1.96086 7.21079 1.58579C7.58586 1.21071 8.09457 1 8.625 1H11.375C11.9054 1 12.4141 1.21071 12.7892 1.58579C13.1643 1.96086 13.375 2.46957 13.375 3V5M6.625 5H13.375Z" fill="#1E5724"/>
-                                    <path d="M19 5H13.375M13.375 5V3C13.375 2.46957 13.1643 1.96086 12.7892 1.58579C12.4141 1.21071 11.9054 1 11.375 1H8.625C8.09457 1 7.58586 1.21071 7.21079 1.58579C6.83571 1.96086 6.625 2.46957 6.625 3V5M13.375 5H6.625M1 5H6.625M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8H18Z" stroke="#093623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
+                    <div class="flex flex-row w-full shadow-lg rounded-xl">
+                        <div>
+                            <img loading="lazy" [src]="plant.variation_id != null ? getImageSrc(plant.plant_ID, plant.variation_id) : plant.plant_image" class="w-[200px]" alt="prettyplant logo">
                         </div>
-                        <h5>Php {{plant.plant_price}}</h5>
-                        <h5 *ngIf="plant.variation_id === null">{{plant.plant_category}}</h5>
-                        <h5 *ngIf="plant.variation_id !== null">{{this.itemColor}}, {{plant.plant_category}}</h5>
-                        <div class="flex flex-row justify-end items-end mt-3">
-                            <button class="bg-gray-200 w-8 h-8 rounded-lg flex justify-center items-center" (click)="decreaseQuantity(plant.cart_ID, plant.plant_ID, plant.variation_id)">-</button>
-                            <span class="mx-2">{{ plant.quantity }}</span>
-                            <button class="bg-gray-200 w-8 h-8 rounded-lg flex justify-center items-center" (click)="increaseQuantity(plant.cart_ID, plant.plant_ID, plant.variation_id)">+</button>
+                        <div class="flex flex-col w-full ml-2 mr-1 relative">
+                            <div class="flex flex-row justify-between items-center">
+                                <h2 class="text-xl font-semibold">{{plant.plant_name}}</h2>
+                                <button class="mt-1 mr-1 justify-end text-red-500" title="Remove" (click)="removeItem(plant.cart_ID)">
+                                    <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <mask id="path-1-inside-1_542_3" fill="white">
+                                        <path d="M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8"/>
+                                        </mask>
+                                        <path d="M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8" fill="#1E5724"/>
+                                        <path d="M16.005 19.346L15.0201 19.1728L15.0201 19.173L16.005 19.346ZM14.035 21L14.0351 20H14.035V21ZM5.965 21L5.965 20L5.96492 20L5.965 21ZM3.995 19.346L4.97992 19.173L4.97989 19.1728L3.995 19.346ZM17.0151 7.82682L15.0201 19.1728L16.9899 19.5192L18.9849 8.17318L17.0151 7.82682ZM15.0201 19.173C14.9794 19.4047 14.8583 19.6146 14.6782 19.7659L15.9642 21.2976C16.5046 20.8438 16.8678 20.214 16.9899 19.519L15.0201 19.173ZM14.6782 19.7659C14.498 19.9171 14.2703 20 14.0351 20L14.0349 22C14.7406 22.0001 15.4237 21.7513 15.9642 21.2976L14.6782 19.7659ZM14.035 20H5.965V22H14.035V20ZM5.96492 20C5.72969 20 5.50199 19.9171 5.32183 19.7659L4.03581 21.2976C4.57627 21.7513 5.25939 22.0001 5.96508 22L5.96492 20ZM5.32183 19.7659C5.14168 19.6146 5.02062 19.4047 4.97992 19.173L3.01008 19.519C3.13216 20.214 3.49536 20.8438 4.03581 21.2976L5.32183 19.7659ZM4.97989 19.1728L2.98489 7.82682L1.01511 8.17318L3.01011 19.5192L4.97989 19.1728Z" fill="#093623" mask="url(#path-1-inside-1_542_3)"/>
+                                        <path d="M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8H18ZM19 5H13.375ZM1 5H6.625ZM6.625 5V3C6.625 2.46957 6.83571 1.96086 7.21079 1.58579C7.58586 1.21071 8.09457 1 8.625 1H11.375C11.9054 1 12.4141 1.21071 12.7892 1.58579C13.1643 1.96086 13.375 2.46957 13.375 3V5M6.625 5H13.375Z" fill="#1E5724"/>
+                                        <path d="M19 5H13.375M13.375 5V3C13.375 2.46957 13.1643 1.96086 12.7892 1.58579C12.4141 1.21071 11.9054 1 11.375 1H8.625C8.09457 1 7.58586 1.21071 7.21079 1.58579C6.83571 1.96086 6.625 2.46957 6.625 3V5M13.375 5H6.625M1 5H6.625M18 8L16.005 19.346C15.9236 19.8094 15.6815 20.2292 15.3212 20.5317C14.9609 20.8342 14.5055 21 14.035 21H5.965C5.49454 21 5.03913 20.8342 4.67882 20.5317C4.31852 20.2292 4.07639 19.8094 3.995 19.346L2 8H18Z" stroke="#093623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <h5>Php {{plant.plant_price}}</h5>
+                            <h5 *ngIf="plant.variation_id === null">{{plant.plant_category}}</h5>
+                            <h5 *ngIf="plant.variation_id !== null">{{this.itemColor}}, {{plant.plant_category}}</h5>
+                            <div class="flex flex-row justify-end items-end mt-3">
+                                <button class="bg-gray-200 w-8 h-8 rounded-lg flex justify-center items-center" (click)="decreaseQuantity(plant.cart_ID, plant.plant_ID, plant.variation_id)">-</button>
+                                <span class="mx-2">{{ plant.quantity }}</span>
+                                <button class="bg-gray-200 w-8 h-8 rounded-lg flex justify-center items-center" (click)="increaseQuantity(plant.cart_ID, plant.plant_ID, plant.variation_id)">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+            } @else {
+                @if(this.selectedPlants.length > 0) {
+                    <div *ngFor="let plant of selectedPlants" class="flex flex-row justify-center w-[90%] mt-2">
+                        <div class="flex flex-row w-full shadow-lg rounded-xl">
+                            <div>
+                                <img loading="lazy" [src]="plant.variation_id != null ? getImageSrc(plant.plant_ID, plant.variation_id) : plant.plant_image" class="w-[200px]" alt="prettyplant logo">
+                            </div>
+                            <div class="flex flex-col w-full ml-2 mr-1 relative">
+                                <div class="flex flex-row justify-between items-center">
+                                    <h2 class="text-xl font-semibold">{{plant.plant_name}}</h2>
+                                </div>
+                                <h5>Php {{plant.plant_price}}</h5>
+                                <h5 *ngIf="plant.variation_id === null">{{plant.plant_category}}</h5>
+                                <h5 *ngIf="plant.variation_id !== null">{{this.itemColor}}, {{plant.plant_category}}</h5>
+                                <div class="flex flex-row justify-end items-end mt-3">
+                                    <span class="mx-2">{{ plant.quantity }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                }
+                @else {
+                    <div *ngFor="let plant of cartItems" class="flex flex-row justify-center w-[90%] mt-2">
+                        <div class="flex flex-row w-full shadow-lg rounded-xl">
+                            <div>
+                                <img [src]="plant.variation_id != null ? getImageSrc(plant.plant_ID, plant.variation_id) : plant.plant_image" loading="lazy" class="w-[200px]" alt="prettyplant logo">
+                            </div>
+                            <div class="flex flex-col w-full ml-2 mr-1">
+                                <div class="flex flex-row justify-between items-center">
+                                    <h2 class="text-xl font-semibold">{{plant.plant_name}}</h2>
+                                </div>
+                                <h5>Php {{plant.plant_price}}</h5>
+                                <h5 *ngIf="plant.variation_id === null">{{plant.plant_category}}</h5>
+                                <h5 *ngIf="plant.variation_id !== null">{{this.itemColor}}, {{plant.plant_category}}</h5>
+                                <div class="flex flex-row justify-end items-end mt-3">
+                                    <span class="mx-2">x {{ plant.quantity }}</span>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                }
+             
+            }
+            
         </div>
 
     </div>  
@@ -52,65 +100,85 @@
     <div class="flex flex-col div1 md:min-w-[45%] h-2/5 md:h-full justify-center items-center bg-pWhite">
         <div class="flex flex-row justify-center items-center mt-5 mb-5 w-[auto] md:w-[700px] bg-white rounded-lg">
             <div class="w-full px-4 mt-5 mb-4">
-                <div>
-                    <h3 class="text-xl">Coupon Code</h3>
-                </div>
-                <div class="mb-4">
-                    <label class="block font-Fraunces text-gray-700 text-sm mb-2">Enter code for a discount!</label>
-                    <input [(ngModel)]="discountCode" 
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                           [disabled]="discountApplied" 
-                           required>
-                    <label *ngIf="this.discountError" class="text-red-400">{{this.discountError}}</label>
-                </div>
+                @if(!this.addressForm) {
+                    <div>
+                        <h3 class="text-xl">Coupon Code</h3>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block font-Fraunces text-gray-700 text-sm mb-2">Enter code for a discount!</label>
+                        <input [(ngModel)]="discountCode" 
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                               [disabled]="discountApplied" 
+                               required>
+                        <label *ngIf="this.discountError" class="text-red-400">{{this.discountError}}</label>
+                    </div>
+    
+                    <div *ngIf="cartItems.length > 0">
+                        <div class="flex justify-end">
+                            @if(discountApplied) {
+                                <button class="bg-main hover:bg-login text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                (click)="removeDiscount()"> Remove Code </button>
+                            } @else {
+                                <button class="bg-main hover:bg-login text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                (click)="discountTotal(discountCode)" 
+                                [disabled]="discountApplied"> Apply </button>
+                    
+                            }
+                        </div>
+                    </div>
+                    
+    
+                    <div class="flex flex-col text-white justify-center items-center mt-5 mb-5 md:w-[full] bg-main rounded-lg">
+                        <div class="flex justify-between w-full px-4 mt-2">
+                            <h2 class="text-xl ">Subtotal</h2>
+                            <h3>Php {{this.itemSubtotal}}</h3>
+                        </div>
+                        <div class="flex justify-between w-full px-4 mt-2 mb-2">
+                            <h2 class="text-xl ">Shipping</h2>
+                            <h3>Php 70</h3>
+                        </div>
+                        <div class="flex justify-between w-full px-4 mt-2 mb-2">
+                            <h2 class="text-xl font-semibold">Total</h2>
+                            <h3 class="font-semibold">Php {{this.itemsTotal}}</h3>
+                        </div>
+                    </div>
 
-                <div *ngIf="cartItems.length > 0">
-                    <div class="flex justify-end">
-                        @if(discountApplied) {
-                            <button class="bg-main hover:bg-login text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                            (click)="removeDiscount()"> Remove Code </button>
-                        } @else {
-                            <button class="bg-main hover:bg-login text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                            (click)="discountTotal(discountCode)" 
-                            [disabled]="discountApplied"> Apply </button>
-                
-                        }
-                    </div>
-                </div>
-                
+                    @if(this.cartItems.length > 0) {
+                        <button  class="bg-main hover:bg-login text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="addressForm = true">Proceed to Checkout</button>
+                    } @else {
+                        <button  routerLink="/shop" class="bg-main hover:bg-login text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Shop For Plants</button>
+                    }
 
-                <div class="flex flex-col text-white justify-center items-center mt-5 mb-5 md:w-[full] bg-main rounded-lg">
-                    <div class="flex justify-between w-full px-4 mt-2">
-                        <h2 class="text-xl ">Subtotal</h2>
-                        <h3>Php {{this.itemSubtotal}}</h3>
+                } @else {
+                    <div class="mb-2">
+                        <h3 class="text-xl">Almost there!</h3>
+                        <h5 class="text-sm">Fill up your new Plants' home.</h5>
                     </div>
-                    <div class="flex justify-between w-full px-4 mt-2 mb-2">
-                        <h2 class="text-xl ">Shipping</h2>
-                        <h3>Php 70</h3>
+                    <div class="mb-4">
+                        <label for="email" class="block font-Fraunces text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <input value="{{this.user.email}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
-                    <div class="flex justify-between w-full px-4 mt-2 mb-2">
-                        <h2 class="text-xl font-semibold">Total</h2>
-                        <h3 class="font-semibold">Php {{this.itemsTotal}}</h3>
+                    <div class="mb-4">
+                        <label for="phone" class="block font-Fraunces text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input value="{{this.user.phone_number}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
-                </div>
+                    <div class="mb-4">
+                        <label for="address" class="block font-Fraunces text-gray-700 text-sm font-bold mb-2">Delivery Address</label>
+                        <textarea value="{{this.user.address}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3" required></textarea>
+                    </div>
+
+                    <button  class="bg-main hover:bg-login text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="addressForm = false">Go Back To Cart</button>
+
+                }
                 
             </div>
         </div>
-
-        @if(this.cartItems.length > 0) {
-            <button  class="bg-main hover:bg-login text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="proceedToCheckout()">Proceed to Checkout</button>
-        } @else {
-            <button  routerLink="/shop" class="bg-gray-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Shop For Items</button>
-        }
             
         
     </div>
 
 </div>
 
-<!-- <div class="w-full h-full">
-    <p>login works!</p>
-</div> -->
 
                 <!-- <div class="mb-4">
                     <label for="email" class="block font-Fraunces text-gray-700 text-sm font-bold mb-2">Email Address</label>
