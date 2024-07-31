@@ -61,10 +61,14 @@ export class ProductViewComponent {
       let previousQuantity = this.cartService.getQuantity(id, variation_ID);
       let newQuantity = previousQuantity + quantity;
       let cartID = this.cartService.findItemInCart(id, variation_ID);
+
+      //find the plant sa store
+
+      let plantObject = this.plantStore.getPlantFromShop(id);
       if(cartID) {
         this.cartService.increaseSomeMoreQuantity(id, quantity);
         this.dataService.patchData({quantity: newQuantity, cart_ID: cartID}, 'addQuantity').subscribe((response: any) => {
-          console.log(response);
+          //(response);
           this.isLoading = false;
           this.snackbar.open('Item added to cart!', 'Close', {
             duration: 2000,
@@ -73,8 +77,8 @@ export class ProductViewComponent {
         })
       } else {
         this.dataService.postData({plant: id, variation: variation_ID, count: this.quantity}, 'addCart').subscribe((response: any) => {
-          console.log(response);
-          this.cartService.addToCart(response, id, variation_ID, this.quantity);
+          //(response);
+          this.cartService.addToCart(response, plantObject, variation_ID, this.quantity);
           this.isLoading = false;
           this.snackbar.open('Item added to cart!', 'Close', {
             duration: 2000,
@@ -95,7 +99,7 @@ export class ProductViewComponent {
           this.plantStore.plantsVariationsLoaded$.subscribe(()  => {
               const plantVariations = this.plantStore.getPlantVariations(this.plant_id);
               this.variations.push(...plantVariations);
-              console.log("Variations: ", this.variations);
+              //("Variations: ", this.variations);
               this.processUrls(this.variations); 
             }
           )

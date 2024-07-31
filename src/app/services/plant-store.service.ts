@@ -48,10 +48,7 @@ export class PlantStoreService {
 
   getAllVariations() {
     const url = 'http://localhost/easyplant/api-prettyplant/main/getVariation';
-    return this.http.get<Variation[]>(url).pipe(
-      tap(response => console.log(response
-      ))
-    );
+    return this.http.get<Variation[]>(url);
   }
 
   getVariationById(id: number): string {
@@ -74,9 +71,7 @@ export class PlantStoreService {
   getAllPlants() {
 
     const url = 'http://localhost/easyplant/api-prettyplant/main/getProduct';
-    return this.http.get<Product[]>(url).pipe(
-        tap(response => console.log(response))
-    );
+    return this.http.get<Product[]>(url);
   }
 
   getAllShopPlants(): Observable<Product[]> {  

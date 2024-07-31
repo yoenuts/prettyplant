@@ -21,10 +21,32 @@ export class CartComponent implements OnInit {
   discountCode: string = '';  
   discountError: string = '';
   discountApplied: boolean = false;
+  checkboxActive: boolean = false;
+
+  selectedPlants: Cart[] = [];
+
+
+
+
 
 
   constructor(private snackBar: MatSnackBar, private cartService: CartService, private plantService: PlantStoreService, private dataService: DataService) {
 
+  }
+
+  onCheckboxChanged(plant: any) {
+    //(event);
+
+    if(plant.selected) {
+      console.log('checked plant: ', plant.plant_ID);
+      this.selectedPlants.push(plant); 
+    } else {
+      console.log('unchecked plant: ', plant.plant_ID);
+      this.selectedPlants = this.selectedPlants.filter(p => p.plant_ID !== plant.plant_ID);
+      console.log('now selected plants: ', this.selectedPlants);
+    }
+
+    this.getCartSubTotal();
   }
 
   updateItem(id: number): void {
@@ -32,9 +54,7 @@ export class CartComponent implements OnInit {
         let found = false;
         this.cartItems.forEach(item => {
             if (item.variation_id === id && item.variation_id !== null) {
-              
                 this.itemColor = this.plantService.getVariationById(id);
-                console.log("this is the color", this.itemColor);
                 found = true;
             }
         });
@@ -45,12 +65,21 @@ export class CartComponent implements OnInit {
 
     this.updateItem(variation);
     let imageSrc = `http://localhost/easyplant/api-prettyplant/images/${id}-${this.itemColor}.png`;
-    console.log("this is the image source", imageSrc);
     return imageSrc;
   }
 
   getCartSubTotal() {
-    this.itemSubtotal = this.cartService.getSubTotal();
+    if(this.selectedPlants.length > 0) {
+      this.itemSubtotal = 0;
+      this.selectedPlants.forEach(plant => {
+        this.itemSubtotal += plant.plant_price * plant.quantity;
+      });
+    } else {
+      this.itemSubtotal = this.cartService.getSubTotal();
+    }
+    if(this.discountApplied) {
+      this.discountTotal(this.discountCode);
+    }
     this.itemsTotal = this.itemSubtotal + 70;  
   }
 
@@ -72,6 +101,7 @@ export class CartComponent implements OnInit {
 
   }
 
+
   removeDiscount() {
     this.discountApplied = false;
     this.discountCode = '';
@@ -88,21 +118,57 @@ export class CartComponent implements OnInit {
       horizontalPosition: 'center',
     });
     
-    this.dataService.delete('deleteCart').subscribe(response => {
-      console.log(response);
+    this.dataService.deleteAll('deleteCart').subscribe(response => {
+      //(response);
     });
-    console.log("")
   }
 
   increaseQuantity(cart: number, id: number, variation: number | null) {
-    let newQuantity = this.cartService.increaseQuantity(id, variation);
+    if (this.selectedPlants.length > 0) {
+        let plantFound = false;
+        this.selectedPlants = this.selectedPlants.map(plant => {
+            if (plant.plant_ID === id) {
+                plant.quantity += 1; 
+                plantFound = true;
+            }
+            return plant;
+        });
 
-    this.dataService.patchData({quantity: newQuantity, cart_ID: cart}, 'addQuantity').subscribe(response => {
-      console.log(response);
-    })
+        if (plantFound) {
+            this.getCartSubTotal();
+            if(this.discountApplied) {
+              this.discountTotal(this.discountCode);
+            }
+            return;
+        }
+    }
+
+    let newQuantity = this.cartService.increaseQuantity(id, variation);
+    if (this.discountApplied) {
+        this.discountTotal(this.discountCode);
+    }
+
+    this.dataService.patchData({ quantity: newQuantity, cart_ID: cart }, 'addQuantity').subscribe(response => {
+        //(response);
+    });
   }
 
   decreaseQuantity(cart: number, id: number, variation: number | null) {
+    if (this.selectedPlants.length > 0) {
+      let plantFound = false;
+      this.selectedPlants = this.selectedPlants.map(plant => {
+          if (plant.plant_ID === id) {
+            plant.quantity -= 1; 
+            plantFound = true;
+          }
+          return plant;
+      });
+
+      if (plantFound) {
+          this.getCartSubTotal();
+          return;
+      }
+    }
 
     let newQuantity = this.cartService.decreaseQuantity(id, variation);
 
@@ -110,23 +176,26 @@ export class CartComponent implements OnInit {
       this.cartService.removeItemFromCart(cart);
       let id = cart;
       this.dataService.deleteData('deleteCart', id).subscribe(response => {
-          console.log(response);
+          //(response);
       });
     } else {
 
       this.dataService.patchData({quantity: newQuantity, cart_ID: cart}, 'addQuantity').subscribe(response => {
-        console.log(response);
+        //(response);
       })
 
     }
-
-
   }
 
   removeItem(cartID: number) {
+    //if the item is selected, remove it from the selected plants array
+    if(this.selectedPlants.length > 0) {
+      this.selectedPlants = this.selectedPlants.filter(plant => plant.cart_ID !== cartID);
+      this.getCartSubTotal();
+    }
     this.cartService.removeItemFromCart(cartID);
     this.dataService.deleteData('deleteCart', cartID).subscribe(response => {
-      console.log(response);
+      //(response);
     });
 
   }
@@ -138,13 +207,12 @@ export class CartComponent implements OnInit {
       this.getCartSubTotal();
       this.cartService.cartItems$.subscribe(cart => {
         this.cartItems = cart;
-        console.log("these are the cart items brithagga", this.cartItems);
 
       });
     });
 
     this.dataService.fetchData('getUser').subscribe((response: any) => {
-      console.log(response);
+      //(response);
       this.user = response;
     });
   }

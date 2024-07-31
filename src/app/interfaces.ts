@@ -21,6 +21,13 @@ export interface Cart {
     cart_ID: number;
     user_ID: number;
     plant_ID: number;
+    plant_name: string;
+    plant_description: string;
+    plant_price: number;
+    plant_rating: number;
+    plant_image: string;
+    varies: number;
+    plant_category: string;
     quantity: number;
     variation_id: number | null;
 }

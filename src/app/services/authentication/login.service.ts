@@ -37,7 +37,6 @@ export class LoginService {
     const token = this.tokenService.getToken();
     const userID = this.tokenService.userIDToken(this.tokenService.decodeToken());
     const userRole = this.tokenService.userRoleToken(this.tokenService.decodeToken());
-    console.log(userID);
     this._loadValues.next(userID);
 
   }

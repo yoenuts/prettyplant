@@ -4,6 +4,7 @@ import { forkJoin, BehaviorSubject, tap,  filter } from 'rxjs';
 import { LoginService } from './authentication/login.service';
 import { TokenService } from './authentication/token.service';
 import { Cart } from '../interfaces';
+import { Product } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -32,25 +33,33 @@ export class CartService {
     });
   }
 
-  addToCart(cart: number, plant: number, variation: number | null, quantity: number) {
+  addToCart(cart: number, plant: Product, variation: number | null, quantity: number) {
     let oldState = this._cartItems.getValue();
     let itemIndex = oldState.findIndex(item => item.plant_ID === plant && item.variation_ID === variation);
-
+    
     if (itemIndex !== -1) {
       oldState[itemIndex].quantity += quantity;
-      console.log("this is the new quantity ", oldState[itemIndex].quantity)
+      //("this is the new quantity ", oldState[itemIndex].quantity)
     }
     else {
+      //puwede sana na Product to kaso di ko naisip need ko pa irefactor ulet yung ibang parts
       let newCartItem: Cart = {
         cart_ID: cart,
         user_ID: this.userID,
-        plant_ID: plant,
+        plant_ID: plant.plant_ID,
+        plant_name: plant.plant_name,
+        plant_description: plant.plant_description,
+        plant_price: plant.plant_price,
+        plant_rating: plant.plant_rating,
+        plant_image: plant.plant_image,
+        varies: plant.varies,
+        plant_category: plant.plant_category,
         variation_id: variation,
         quantity: quantity
       };
 
       oldState.push(newCartItem);
-      console.log("this is a new item")
+      //("this is a new item: ", newCartItem)
 
       this._cartItems.next(oldState);
     }
@@ -58,6 +67,12 @@ export class CartService {
 
   clearCart() {
     this._cartItems.next([]);
+  }
+
+  clearItem(cart: number) {
+    let oldState = this._cartItems.getValue();
+    let newState = oldState.filter(item => item.cart_ID !== cart);
+    this._cartItems.next(newState);
   }
 
   getSubTotal(): number { 
@@ -73,11 +88,8 @@ export class CartService {
 
   getAllItems() {
     const url = 'http://localhost/easyplant/api-prettyplant/main/getCart';
-    return this.http.get<any[]>(url).pipe(
-      tap(response => console.log(response
-      ))
-    );
-    
+    return this.http.get<any[]>(url);
+
   }
 
   getAllItemsState() {
@@ -106,7 +118,6 @@ export class CartService {
         if (item.cart_ID) {
           const updatedItem = { ...item, quantity: item.quantity + newQ };
           updatedQuantity = updatedItem.quantity;
-          console.log("")
           return updatedItem;
         }
         return item;
@@ -130,7 +141,6 @@ export class CartService {
         return item;
     });
     this._cartItems.next(newState);
-    console.log('this is the new quantity ', updatedQuantity)
     return updatedQuantity;
   }
 

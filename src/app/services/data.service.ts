@@ -11,7 +11,7 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   login(data: any, endpoint: string) {
-    console.log("got it")
+    //("got it")
     return this.http.post(mainPort + '/easyplant/api-prettyplant/main/' + endpoint, data.getRawValue());
   }
 
@@ -31,7 +31,7 @@ export class DataService {
     return this.http.delete(`${mainPort}/easyplant/api-prettyplant/main/${endpoint}?id=${id}`);
   }
 
-  delete(endpoint: string) {
+  deleteAll(endpoint: string) {
     return this.http.delete(mainPort + '/easyplant/api-prettyplant/main/' + endpoint);
   }
 }
