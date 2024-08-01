@@ -23,6 +23,7 @@ export class CartComponent implements OnInit {
   discountApplied: boolean = false;
   checkboxActive: boolean = false;
   addressForm: boolean = false; 
+  purchaseSuccess = false;
 
   selectedPlants: Cart[] = [];
 
@@ -35,16 +36,19 @@ export class CartComponent implements OnInit {
 
   }
 
+  clearSelectedPlants() {
+    this.cartItems.forEach(plant => plant.selected = false);
+    this.selectedPlants = [];
+    this.getCartSubTotal();
+  }
+
   onCheckboxChanged(plant: any) {
     //(event);
 
     if(plant.selected) {
-      console.log('checked plant: ', plant.plant_ID);
       this.selectedPlants.push(plant); 
     } else {
-      console.log('unchecked plant: ', plant.plant_ID);
       this.selectedPlants = this.selectedPlants.filter(p => p.plant_ID !== plant.plant_ID);
-      console.log('now selected plants: ', this.selectedPlants);
     }
 
     this.getCartSubTotal();
@@ -175,8 +179,28 @@ export class CartComponent implements OnInit {
     }
   }
 
+  confirmOrder() {
+    if (this.selectedPlants.length > 0) {
+      this.selectedPlants.forEach(plant => {
+        this.dataService.deleteData('deleteCart', plant.cart_ID).subscribe(response => {
+          this.selectedPlants.filter(p => p.cart_ID !== plant.cart_ID);
+          this.cartService.removeItemFromCart(plant.cart_ID);
+        });
+      });
+    } else {
+      this.cartItems.forEach(plant => {
+        this.dataService.deleteData('deleteCart', plant.cart_ID).subscribe(response => {
+          this.cartItems = this.cartItems.filter(p => p.cart_ID !== plant.cart_ID);
+          this.cartService.removeItemFromCart(plant.cart_ID);
+        });
+      });
+    }
+
+    this.addressForm = true;
+    this.purchaseSuccess = true
+  } 
+
   removeItem(cartID: number) {
-    //if the item is selected, remove it from the selected plants array
     if(this.selectedPlants.length > 0) {
       this.selectedPlants = this.selectedPlants.filter(plant => plant.cart_ID !== cartID);
       this.getCartSubTotal();
